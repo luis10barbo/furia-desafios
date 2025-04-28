@@ -1,17 +1,22 @@
-<main class="bg-neutral-950 h-screen flex  p-16 gap-8 text-white">
-    <section id="chat-section" class="flex-2 flex flex-col gap-4 min-w-[800px]">
-      <div id="chat-container" class="w-full border border-neutral-800 h-full rounded-lg relative flex flex-col gap-4 p-4 overflow-auto">
-        <div class="blur-container w-full h-full flex justify-center items-center top-0 left-0">
+<main class="bg-neutral-950 h-screen flex flex-col-reverse lg:flex-row p-4 gap-4 lg:p-16 lg:gap-8 text-white overflow-hidden">
+    <section id="chat-section" class="flex flex-col gap-4 h-full lg:min-w-[800px]">
+      <div id="chat-container" class="w-full border border-neutral-800 h-full rounded-lg relative flex flex-col gap-4 p-4 overflow-y-auto overflow-x-hidden" #chatContainer>
+        <div class="blur-container absolute w-full h-full flex justify-center items-center top-0 left-0">
           <div class="absolute w-96 h-48  bg-white/10 blur-3xl"></div>
         </div>
-        @for (message of chat; track message.id) {
-            <div class="message-container flex gap-2">
-                @if (message.isChatBot) {
-                    <div class="w-12 aspect-square rounded-full bg-neutral-900"></div>
-                }
-                {{ message.message }}
-            </div>
-        }
+        <div class="absolute w-full h-full flex flex-col gap-4 overflow-y-auto top-0 left-0  p-4">
+            @for (message of chat; track message.id) {
+                <div [class]="`message-container flex gap-2 ${message.role === 'assistant' ? 'flex-row-reverse' : 'flex-row'} ` ">
+                    @if (message.role === "assistant") {
+                        <div class="min-w-12 h-12 rounded-full bg-neutral-900"></div>
+                    }
+                    <div [class]="`p-4 border rounded-lg  ${message.role === 'assistant' ? 'bg-blue-950/30 border-blue-950/30' : 'bg-neutral-900/30 border-neutral-900 '}`">
+                        {{ message.message }}
+                    </div>
+                </div>
+            }
+        </div>
+        
       </div>
       <div id="chat-input-container">
         <form [formGroup]="chatForm" (ngSubmit)="chatSubmit()">
@@ -22,7 +27,7 @@
         </form>
       </div>
     </section>
-    <section id="metadata-section" class="flex flex-col justify-center items-center text-center gap-4 relative">
+    <section id="metadata-section" class="flex flex-col justify-center items-center text-center gap-4 relative w-full">
       <div class="aspect-square absolute w-32 bg-white/30 blur-3xl"></div> 
       <h1 class="text-4xl  font-bold">FuriaChat</h1>
       <p class="text-2xl max-w-[30ch]">Tire duvidas ou converse sobre o time da Fúria com o FuriaChat</p>

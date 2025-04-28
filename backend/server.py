@@ -10,5 +10,5 @@ app.register_blueprint(chat_bp, url_prefix='/chat')
 
 if __name__ == "__main__":
     print(app.url_map)
-    app.run(debug=True, port=8000)
+    app.run(debug=False, port=8000)
     

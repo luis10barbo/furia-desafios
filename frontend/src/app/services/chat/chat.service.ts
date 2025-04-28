@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { BACKEND } from '../../constants';
 import { Observable } from 'rxjs';
 
+export type Message = {message:string, role: "user" | "assistant", id: string}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -10,9 +12,13 @@ export class ChatService {
 
   constructor(private httpClient: HttpClient) {}
 
-  public async queryChat(query: string) {
+  public async queryChat(query: string, messageHistory: Message[]) {
     const response = await fetch(`${BACKEND}/chat/send?query=${query}`, {
-      method: 'GET',
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(messageHistory)
     });
 
     const reader = response.body?.getReader();

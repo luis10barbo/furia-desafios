@@ -1,59 +1,69 @@
-from typing import AsyncIterator, cast
-from agents import Agent, Runner, StreamEvent, WebSearchTool
+import asyncio
+from typing import Iterable, TypedDict, cast
+# from agents import Agent, Runner, StreamEvent, WebSearchTool
 from flask_restful.reqparse import RequestParser
+from openai import OpenAI, Stream
 from openai.types.responses import ResponseTextDeltaEvent 
+from openai.types.chat import ChatCompletionChunk, ChatCompletionMessageParam
+
 from quart import Blueprint, Response, request
 
 chat_bp = Blueprint("chat", __name__)
 
-# async def stream(gpt_stream: AsyncIterator[StreamEvent]):
-#     loop = asyncio.get_event_loop()
+async def stream(stream: Stream[ChatCompletionChunk]):
+    for chunk in stream:
+        print(chunk.choices[0].delta)
+        # if (hasattr(chunk, "data") and type(chunk.data) == ResponseTextDeltaEvent): # type: ignore
+        #     response = cast(ResponseTextDeltaEvent, chunk.data)  # type: ignore
+        #     yield response.delta
+        if (type(chunk.choices[0].delta.content) == str):
+           await asyncio.sleep(0)
+           yield chunk.choices[0].delta.content
 
-#     async def get_next(agen: AsyncIterator[StreamEvent]):
-#         try:
-#             return await agen.__anext__()
-#         except StopAsyncIteration:
-#             return None
+class MessagesQuery(TypedDict):
+    message: str
+    role: str
 
-#     while True:
-#         chunk = loop.run_until_complete(get_next(gpt_stream))
-#         if chunk is None:
-#             break
-#         print(chunk)
-#         yield chunk['delta']
+client = OpenAI()
 
-#     async for stream_event in gpt_stream:
-#         print(f"result -> {stream_event}\n")
-#         if (type(stream_event.data) == ResponseTextDeltaEvent): # type: ignore
-#             response = cast(ResponseTextDeltaEvent, stream_event.data)  # type: ignore
-#             yield response.delta 
-
-async def stream(stream: AsyncIterator[StreamEvent]):
-    async for chunk in stream:
-        if (hasattr(chunk, "data") and type(chunk.data) == ResponseTextDeltaEvent): # type: ignore
-            response = cast(ResponseTextDeltaEvent, chunk.data)  # type: ignore
-            yield response.delta 
-
-
-chat_query_args = RequestParser()
-chat_query_args.add_argument("query", type=str, required=True, help="Mensagem de query para o chatbot") # type:ignore
-@chat_bp.route("/send", methods=["GET"])
+@chat_bp.route("/send", methods=["POST"])
 async def send_message():
-    # query = cast(str, (await request.get_json())["query"]) # type:ignore
     query = request.args.get("query")
-
     if not query or len(query) == 0:
         return Response("Please send a valid query", status=401)
 
-    # return query
-    agent = Agent(
-        name="Fan da Furia",
-        instructions="Apenas responda se for sobre o time de E-sports 'Fúria' ou seus participantes. Seja breve e com entusiasmo",
-        model="gpt-4.1-nano",
-        # tools=[WebSearchTool()],
-    )
+    messages: Iterable[ChatCompletionMessageParam] = []
+    messages.append({
+        "role": "system",
+        "content": "Apenas responda se for sobre o time de E-sports 'Fúria' ou seus participantes. Seja breve, responda com entusiasmo e com fontes se possível"
+    })
 
-    result = Runner.run_streamed(agent, query)
-
+    body: list[MessagesQuery] = await request.get_json()
+    for message in body:
+        if message["role"] == "assistant":
+            messages.append({
+                "role": "assistant",
+                "content": message["message"]
+            })
+        else:
+            messages.append({
+                "role": "user",
+                "content": message["message"]
+            })
     
-    return Response(stream(result.stream_events()), 200)
+    messages.append({
+        "role": "user",
+        "content": query
+    })
+
+    # # return query
+    completion = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages= messages,
+    # tools=[WebSearchTool()],
+
+    stream=True
+    )
+    
+    return Response(stream(completion), 200)
+    # return query
