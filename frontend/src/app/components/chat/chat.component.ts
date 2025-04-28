@@ -1,10 +1,11 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { ChatService, Message } from '../../services/chat/chat.service';
+import { MarkdownModule } from 'ngx-markdown';
 
 @Component({
   selector: 'app-chat',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, MarkdownModule],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css'
 })
@@ -30,9 +31,11 @@ export class ChatComponent {
       this.chatForm.value.query!!,
       this.chat
     )).subscribe((val) => {
+      if (this.answering) {
+        this.answering = false;
+      }
       this.chatContainer.nativeElement.scrollTop = this.chatContainer.nativeElement.scrollHeight;
-      this.answering = false;
-
+      
       let indexToUpdate = this.chat.findIndex(item => item.id === uuid);
       if (indexToUpdate === -1) {
         this.chat.push({role: "assistant", message: val, id: uuid})
@@ -41,5 +44,6 @@ export class ChatComponent {
         this.chat[indexToUpdate] = {...oldInfo, message: oldInfo.message + val}
       }
     });
+    this.chatForm.reset();
   }
 }

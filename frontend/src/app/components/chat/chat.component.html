@@ -1,17 +1,21 @@
 <main class="bg-neutral-950 h-screen flex flex-col-reverse lg:flex-row p-4 gap-4 lg:p-16 lg:gap-8 text-white overflow-hidden">
     <section id="chat-section" class="flex flex-col gap-4 h-full lg:min-w-[800px]">
-      <div id="chat-container" class="w-full border border-neutral-800 h-full rounded-lg relative flex flex-col gap-4 p-4 overflow-y-auto overflow-x-hidden" #chatContainer>
+      <div id="chat-container" class="w-full border border-neutral-800 h-full rounded-lg relative flex flex-col gap-4 p-4 overflow-y-auto overflow-x-hidden" >
         <div class="blur-container absolute w-full h-full flex justify-center items-center top-0 left-0">
           <div class="absolute w-96 h-48  bg-white/10 blur-3xl"></div>
         </div>
-        <div class="absolute w-full h-full flex flex-col gap-4 overflow-y-auto top-0 left-0  p-4">
+        <div class="absolute w-full h-full flex flex-col gap-4 overflow-y-auto top-0 left-0  p-4" #chatContainer>
             @for (message of chat; track message.id) {
                 <div [class]="`message-container flex gap-2 ${message.role === 'assistant' ? 'flex-row-reverse' : 'flex-row'} ` ">
                     @if (message.role === "assistant") {
-                        <div class="min-w-12 h-12 rounded-full bg-neutral-900"></div>
+                        <div class="min-w-12 h-12 rounded-full bg-neutral-900">
+                            <img src="/static/furia.png" alt="furia img" class="w-full h-full p-2">
+                        </div>
                     }
                     <div [class]="`p-4 border rounded-lg  ${message.role === 'assistant' ? 'bg-blue-950/30 border-blue-950/30' : 'bg-neutral-900/30 border-neutral-900 '}`">
-                        {{ message.message }}
+                        <markdown [data]="message.message">
+                            
+                        </markdown>
                     </div>
                 </div>
             }
@@ -21,15 +25,18 @@
       <div id="chat-input-container">
         <form [formGroup]="chatForm" (ngSubmit)="chatSubmit()">
           <div class="input-holder w-full  border-neutral-800 border rounded-lg flex items-center">
-            <input formControlName="query" type="text" class="p-4 w-full outline-0" placeholder="Pergunte alguma coisa sobre a fúria...">
+            <input formControlName="query" type="text" class="p-4 w-full outline-0" placeholder="Pergunte sobre Fúria...">
             <button [disabled]="!chatForm.valid" class="px-8 h-fit py-2 mr-2 rounded-lg border bg-neutral-900 border-neutral-900 hover:border-neutral-600 hover:bg-[#303030] duration-75 cursor-pointer disabled:bg-neutral-950 disabled:border-neutral-900 disabled:cursor-not-allowed" [title]="chatForm.valid ? 'Enviar mensagem' : 'Digite uma mensagem de no mínimo 4 caracteres'">Enviar</button>
           </div>
         </form>
       </div>
     </section>
-    <section id="metadata-section" class="flex flex-col justify-center items-center text-center gap-4 relative w-full">
+    <section id="metadata-section" class="flex flex-row sm:flex-col justify-evenly sm:justify-center items-center text-center gap-4 relative w-full">
       <div class="aspect-square absolute w-32 bg-white/30 blur-3xl"></div> 
-      <h1 class="text-4xl  font-bold">FuriaChat</h1>
-      <p class="text-2xl max-w-[30ch]">Tire duvidas ou converse sobre o time da Fúria com o FuriaChat</p>
+      <img src="/static/furia.png" alt="furia img" class="w-20 h-20">
+      <div class="metadata-container flex flex-col sm:gap-4 gap-2">
+          <h1 class="text-3xl sm:text-4xl  font-bold">FuriaChat</h1>
+          <p class="text-xl sm:text-2xl max-w-[30ch]">Tire duvidas ou converse sobre o time da Fúria com o FuriaChat</p>
+      </div>
     </section>
   </main>

@@ -1,9 +1,6 @@
 import asyncio
-from typing import Iterable, TypedDict, cast
-# from agents import Agent, Runner, StreamEvent, WebSearchTool
-from flask_restful.reqparse import RequestParser
+from typing import Iterable, TypedDict
 from openai import OpenAI, Stream
-from openai.types.responses import ResponseTextDeltaEvent 
 from openai.types.chat import ChatCompletionChunk, ChatCompletionMessageParam
 
 from quart import Blueprint, Response, request
@@ -12,10 +9,6 @@ chat_bp = Blueprint("chat", __name__)
 
 async def stream(stream: Stream[ChatCompletionChunk]):
     for chunk in stream:
-        print(chunk.choices[0].delta)
-        # if (hasattr(chunk, "data") and type(chunk.data) == ResponseTextDeltaEvent): # type: ignore
-        #     response = cast(ResponseTextDeltaEvent, chunk.data)  # type: ignore
-        #     yield response.delta
         if (type(chunk.choices[0].delta.content) == str):
            await asyncio.sleep(0)
            yield chunk.choices[0].delta.content
@@ -35,7 +28,7 @@ async def send_message():
     messages: Iterable[ChatCompletionMessageParam] = []
     messages.append({
         "role": "system",
-        "content": "Apenas responda se for sobre o time de E-sports 'Fúria' ou seus participantes. Seja breve, responda com entusiasmo e com fontes se possível"
+        "content": "Apenas responda se for sobre o time de E-sports 'Fúria' ou seus participantes. Seja breve, responda com entusiasmo e com fontes se possível."
     })
 
     body: list[MessagesQuery] = await request.get_json()
@@ -56,14 +49,11 @@ async def send_message():
         "content": query
     })
 
-    # # return query
     completion = client.chat.completions.create(
-    model="gpt-4o-mini",
+    model="gpt-4o-mini-search-preview",
+    # model="gpt-4o-mini",
     messages= messages,
-    # tools=[WebSearchTool()],
-
     stream=True
     )
     
     return Response(stream(completion), 200)
-    # return query
