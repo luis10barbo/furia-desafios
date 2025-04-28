@@ -16,7 +16,9 @@ export class ChatComponent {
     query: new FormControl("", [Validators.required, Validators.minLength(4)]),
   })
 
-  chat: Message[] = []
+  chat: Message[] = [
+    {id: crypto.randomUUID(), message: "**Bem vindo ao ChatBot Fúria.** \n\n Vamos falar sobre algo relacionado à Fúria?", role: "assistant"}
+  ]
   answering = false;
 
   constructor(private chatService: ChatService) {}
