@@ -12,3 +12,13 @@
         opacity: 100%;
     }
 }
+
+markdown > a {
+    color: rgb(158, 164, 255);
+    transition: 75ms;
+}
+
+markdown > a:hover {
+    color: rgb(110, 119, 241)
+
+}

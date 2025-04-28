@@ -2,11 +2,11 @@
     <section id="chat-section" class="flex flex-col gap-4 h-full lg:min-w-[800px]">
       <div id="chat-container" class="w-full border border-neutral-800 h-full rounded-lg relative flex flex-col gap-4 p-4 overflow-y-auto overflow-x-hidden" >
         <div class="blur-container absolute w-full h-full flex justify-center items-center top-0 left-0">
-          <div class="absolute w-96 h-48  bg-white/10 blur-3xl"></div>
+          <div class="absolute w-96 h-48  bg-white/5 blur-3xl"></div>
         </div>
         <div class="absolute w-full h-full flex flex-col gap-4 overflow-y-auto top-0 left-0  p-4" #chatContainer>
             @for (message of chat; track message.id) {
-                <div [class]="`message-container flex gap-2 ${message.role === 'assistant' ? 'flex-row-reverse' : 'flex-row'} ` ">
+                <div [class]="`message-container flex gap-2 ${message.role === 'assistant' ? 'flex-row' : 'flex-row-reverse'} ` ">
                     @if (message.role === "assistant") {
                         <div class="min-w-12 h-12 rounded-full bg-neutral-900">
                             <img src="/static/furia.png" alt="furia img" class="w-full h-full p-2">
