@@ -1,0 +1,132 @@
+<main class="bg-neutral-950 h-screen flex flex-col lg:flex-row gap-4  lg:gap-8 text-white overflow-hidden">
+    <section id="metadata-section" class="flex flex-row sm:flex-col justify-evenly sm:justify-center items-center text-center gap-4 relative w-full p-4 lg:p-16">
+        <div class="aspect-square absolute w-32 bg-white/30 blur-3xl"></div> 
+        <img src="/static/furia.png" alt="furia img" class="w-20 h-20">
+        <div class="metadata-container flex flex-col sm:gap-4 gap-2">
+            <h1 class="text-3xl sm:text-4xl  font-bold">Furia Know Your Fan</h1>
+            <p class="text-xl sm:text-2xl max-w-[30ch] text-center">Responda algumas perguntas e receba informações de eventos e ofertas exclusivas em produtos da Fúria</p>
+        </div>
+    </section>
+    @if (loading) {
+        <section id="metadata-section" class="overflow-x-hidden flex flex-row sm:flex-col justify-center items-center gap-4 relative w-full text-xl text-left p-4 lg:p-16">
+            <div class="loader"></div>
+        </section>
+    }
+    @else {
+        @if (mode === "Login") {
+            <section id="metadata-section" class="overflow-x-hidden flex flex-row sm:flex-col justify-center gap-4 relative w-full text-xl text-left p-4 lg:p-16">
+                <form class="flex flex-col gap-8" [formGroup]="loginFormGroup" (ngSubmit)="doLogin()">
+                    <div class="input-holder flex flex-col gap-4">
+                        <label for="" class="">E-mail</label>
+                        <input formControlName="email" type="email" placeholder="Digite seu e-mail" class="p-3 border border-neutral-700 outline-none rounded-lg" autocomplete="email">
+                    </div>
+                    <div class="input-holder flex flex-col gap-4">
+                        <label for="" class="">Senha</label>
+                        <input formControlName="password" type="password" placeholder="Digite sua senha" class="p-3 border border-neutral-700 outline-none rounded-lg" autocomplete="current-password">
+                    </div>
+                    <footer class="flex justify-end gap-8 items-center">
+                        <button class="underline cursor-pointer" (click)="changeMode('Register')" type="button">Não tem uma conta?</button>
+                        <button class="py-3 px-6 border border-neutral-800 w-fit rounded-lg bg-neutral-950 cursor-pointer self-end hover:bg-neutral-900 hover:border-neutral-700 duration-75">Logar</button>
+                    </footer>
+                </form>
+            </section>
+        }
+        @else if (mode === "Register") {
+            <section id="metadata-section" class="overflow-x-hidden flex flex-row sm:flex-col gap-4 relative w-full text-xl text-left overflow-auto p-4 lg:p-16">
+                <form class="flex flex-col gap-8" [formGroup]="registerFormGroup" (ngSubmit)="doRegister()">
+                    <div class="input-holder flex flex-col gap-4">
+                        <label for="" class="">Email</label>
+                        <input formControlName="email" type="email" placeholder="Digite seu e-mail" class="p-3 border border-neutral-700 outline-none rounded-lg" autocomplete="email">
+                    </div>
+                    <div class="input-holder flex flex-col gap-4">
+                        <label for="" class="">Senha</label>
+                        <input formControlName="password" type="password" placeholder="Digite sua senha" class="p-3 border border-neutral-700 outline-none rounded-lg" autocomplete="current-password">
+                    </div>
+                    
+                    <div class="flex gap-4">
+                        <div class="input-holder flex flex-col gap-4 flex-1">
+                            <label for="" class="">Nome</label>
+                            <input formControlName="firstName" type="email" placeholder="Digite seu nome" class="p-3 border border-neutral-700 outline-none rounded-lg" autocomplete="name">
+                        </div>
+
+                        <div class="input-holder flex flex-col gap-4 flex-1">
+                            <label for="" class="">Sobrenome</label>
+                            <input formControlName="lastName" type="text" placeholder="Digite seu sobrenome" class="p-3 border border-neutral-700 outline-none rounded-lg" autocomplete="family-name">
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4 flex-wrap">
+                        <div class="input-holder flex flex-col gap-4 flex-1">
+                            <label for="" class="">Estado</label>
+                            <input formControlName="state" type="email" placeholder="Digite seu estado" class="p-3 border border-neutral-700 outline-none rounded-lg">
+                        </div>
+
+                        <div class="input-holder flex flex-col gap-4 flex-1">
+                            <label for="" class="">Cidade</label>
+                            <input formControlName="city" type="text" placeholder="Digite sua cidade" class="p-3 border border-neutral-700 outline-none rounded-lg">
+                        </div>
+
+                        <div class="input-holder flex flex-col gap-4 flex-1">
+                            <label for="" class="">Bairro</label>
+                            <input formControlName="neighborhood" type="text" placeholder="Digite seu bairro" class="p-3 border border-neutral-700 outline-none rounded-lg">
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div class="input-holder flex flex-col gap-4 flex-1">
+                            <label for="" class="">Celular</label>
+                            <input formControlName="phone" type="text" placeholder="Digite seu celular" class="p-3 border border-neutral-700 outline-none rounded-lg" autocomplete="tel">
+                        </div>
+                    </div>
+
+                    <div class="input-holder flex flex-col gap-4 flex-1">
+                        <label for="input-interesses" class="">Você tem algum interesse sobre eventos ou produtos da fúria?</label>
+                        <textarea formControlName="interests" id="input-interesses" type="text" placeholder="Digite seus interesses" class="p-3 border border-neutral-700 outline-none rounded-lg"></textarea>
+                    </div>
+
+                    <div class="flex flex-col gap-4">
+                        <p>Você participou de algum evento com a fúria no último ano?</p>
+                        @if (events.length > 0) {
+                            <div class="event-holder flex gap-2">
+                                @for (event of events; track event) {
+                                    <div class="border border-neutral-700 text-nowrap p-3 rounded-md">
+                                        {{ event.name }}
+                                    </div>
+                                }
+                            </div>
+                        }
+                        <div class="flex gap-2 items-center">
+                            <div class="flex border border-neutral-700 outline-none rounded-lg w-full" autocomplete="family-name">  
+                                <input type="text" placeholder="Digite o nome dos eventos, separados por vírgulas" class="p-3 outline-none rounded-lg w-full" autocomplete="family-name" (input)="changeEvents($event)" #eventsInput>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col gap-4">
+                        <p>Você comprou algo da fúria no último ano?</p>
+                        @if (purchases.length > 0) {
+                            <div class="event-holder flex gap-2">
+                                @for (purchase of purchases; track purchase) {
+                                    <div class="border border-neutral-700 text-nowrap p-3 rounded-md">
+                                        {{ purchase.name }}
+                                    </div>
+                                }
+                            </div>
+                        }
+                        <div class="flex gap-2 items-center">
+                            <div class="flex border border-neutral-700 outline-none rounded-lg w-full" autocomplete="family-name">  
+                                <input type="text" placeholder="Digite o nome das suas compras, separadas por vírgulas" class="p-3 outline-none rounded-lg w-full" autocomplete="family-name" (input)="changePurchases($event)" #purchasesInput>
+                            </div>
+                        </div>
+                    </div>
+
+                    <footer class="flex justify-end gap-8 items-center">
+                        <button class="underline cursor-pointer" (click)="changeMode('Login')" type="button">Já tem uma conta?</button>
+                        <button class="py-3 px-6 border border-neutral-800 w-fit rounded-lg bg-neutral-950 cursor-pointer self-end hover:bg-neutral-900 hover:border-neutral-700 duration-75">Continuar</button>
+                    </footer>
+                </form>
+            </section>
+        }
+    }
+    
+</main>

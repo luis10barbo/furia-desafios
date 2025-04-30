@@ -1,6 +1,7 @@
 from typing import TypedDict
 import bcrypt
-from quart import Blueprint, Response, request
+from quart import Blueprint, Response, make_response, request
+from utils.auth import auth_logout, create_session, get_user, set_session_id
 from utils.validation import validate_attributes
 
 from db import db
@@ -40,8 +41,11 @@ async def login():
 
     user.password = ""
 
-    
-    return user.model_dump_json(), 200
+    response = await make_response(user.model_dump_json())
+
+    set_session_id(response)
+    await create_session(user.id)
+    return response
 
 class RegisterBody(TypedDict):
     email: str
@@ -65,6 +69,8 @@ class RegisterBody(TypedDict):
 @kyf_bp.route("/register", methods=["POST"])
 async def register():
     body: RegisterBody = await request.get_json()
+    print(body)
+    
     validation_result = validate_attributes(body, required_parameters=['email', 'password', 'first_name', 'last_name', 'phone', 'neighborhood', 'state', 'city', 'purchases', 'events'])
     if validation_result:
         return Response(f"{validation_result}", 200)
@@ -101,8 +107,25 @@ async def register():
         "purchases": {"create": purchases},
         "events": {"create": events},
     })
+    
+    response = await make_response(user.model_dump_json())
+    set_session_id(response)
+
+    await create_session(user.id)
 
     user.password = ""
 
-    return user.model_dump_json(), 200
+    return response
 
+@kyf_bp.route("/logout", methods=["POST"])
+async def logout():
+    await auth_logout()
+    return await make_response("", 204)
+
+@kyf_bp.route("/user", methods=["GET"])
+async def user():
+    user = await get_user()
+    if not user:
+        return await make_response("", 204)
+
+    return await make_response(user.model_dump_json())
