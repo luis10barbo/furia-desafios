@@ -89,7 +89,7 @@ export class KyfComponent {
   }
 
   doLogin() {
-    this.kyfService.doLogin({email: this.loginFormGroup.value.email!, password: this.loginFormGroup.value.password!}).subscribe((val) => {
+    this.kyfService.doLogin({email: this.loginFormGroup.value.email!, password: this.loginFormGroup.value.password!})!.subscribe((val) => {
       if (val) {
         this.router.navigate(["/kyf/profile"])
       }
@@ -109,7 +109,7 @@ export class KyfComponent {
       interests: this.registerFormGroup.value.interests!,
       events: this.events,
       purchases: this.purchases
-    }).subscribe((val) => {
+    })!.subscribe((val) => {
       if (val) {
         this.router.navigate(["/kyf/profile"])
       }

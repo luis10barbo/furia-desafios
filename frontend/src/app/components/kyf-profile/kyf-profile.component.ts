@@ -12,8 +12,7 @@ import { KyfService } from '../../services/kyf/kyf.service';
 export class KyfProfileComponent {
   constructor(private kyfService: KyfService, private router: Router) {}
   doLogout() {
-    this.kyfService.doLogout().subscribe(() => {
-      this.router.navigate(["/kyf"]);
-    });
+    this.kyfService.doLogout().subscribe();
+    this.router.navigate(["/kyf"]);
   }
 }
