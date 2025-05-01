@@ -1,0 +1,5 @@
+Licensed under MIT + Commons Clause
+
+The software is licensed under the MIT license, with the following additional restriction:
+
+The rights granted under the license do not include the right to modify or distribute modified versions of the software, nor to use the software for commercial purposes.
