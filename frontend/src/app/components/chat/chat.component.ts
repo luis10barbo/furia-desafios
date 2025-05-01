@@ -2,10 +2,12 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { ChatService, Message } from '../../services/chat/chat.service';
 import { MarkdownModule } from 'ngx-markdown';
+import { HeaderComponent } from "../header/header.component";
+import { uuidv4 } from "../../utils/uuid" 
 
 @Component({
   selector: 'app-chat',
-  imports: [ReactiveFormsModule, MarkdownModule],
+  imports: [ReactiveFormsModule, MarkdownModule, HeaderComponent],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css'
 })
@@ -17,16 +19,17 @@ export class ChatComponent {
   })
 
   chat: Message[] = [
-    {id: crypto.randomUUID(), message: "**Bem vindo ao ChatBot Fúria.** \n\n Vamos falar sobre algo relacionado à Fúria?", role: "assistant"}
+    {id: uuidv4(), message: "**Bem vindo ao ChatBot Fúria.** \n\n Vamos falar sobre algo relacionado à Fúria?", role: "assistant"}
   ]
   answering = false;
 
   constructor(private chatService: ChatService) {}
 
   async chatSubmit() {
+    // TODO: Switch uuidv4 for crypto.uuidv4
     this.answering = true;
-    const uuid = crypto.randomUUID();
-    this.chat.push({id: crypto.randomUUID(), role: "user", message: this.chatForm.value.query!!});
+    const uuid = uuidv4();
+    this.chat.push({id: uuidv4(), role: "user", message: this.chatForm.value.query!!});
     this.chatContainer.nativeElement.scrollTop = this.chatContainer.nativeElement.scrollHeight;
     
     (await this.chatService.queryChat(

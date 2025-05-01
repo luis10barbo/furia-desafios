@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BACKEND } from '../../constants';
 import { UserModel } from '../../models/userModel';
-import { BehaviorSubject, catchError, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';
 import { AlertService } from '../alert/alert.service';
 
 @Injectable({
@@ -20,29 +20,48 @@ export class KyfService {
   }
 
   doLogin(login: {email: string, password: string}) {
-    return this.httpClient.post(`${BACKEND}/kyf/login`, login, {withCredentials: true}).pipe(catchError((err) => {
+    return this.httpClient.post<UserModel>(`${BACKEND}/kyf/login`, login, {withCredentials: true}).pipe(catchError((err) => {
       this.alertService.doAlert(err.error);
       return throwError(() => err);
     }));
   }
 
   doRegister(login: UserModel) {
-    return this.httpClient.post(`${BACKEND}/kyf/register`, login, {withCredentials: true}).pipe(catchError((err) => {
+    return this.httpClient.post<UserModel>(`${BACKEND}/kyf/register`, login, {withCredentials: true}).pipe(catchError((err) => {
       this.alertService.doAlert(err.error);
       return throwError(() => err);
     }));
   }
 
   doLogout() {
-    return this.httpClient.post(`${BACKEND}/kyf/logout`, null, {withCredentials: true});
+    return new Observable((sub) => {
+      return this.httpClient.post(`${BACKEND}/kyf/logout`, null, {withCredentials: true}).subscribe((val) => {
+        this.userSubject.next(undefined);
+        sub.next(val);
+      });
+    })
   }
 
   getUser() {
-    return this.httpClient.get<UserModel>(`${BACKEND}/kyf/user`, {withCredentials: true});
+    return new Observable<UserModel>((sub) => {
+      return this.httpClient.get<UserModel>(`${BACKEND}/kyf/user`, {withCredentials: true}).subscribe((val) => {
+        this.userSubject.next(val);
+        sub.next(val);
+      });
+    });
   }
 
   setUser(user: UserModel) {
     this.userSubject.next(user);
   }
 
+  submitDocument(front: File, back: File) {
+    const form = new FormData();
+    form.set("frontDocument", front);
+    form.set("backDocument", back);
+    return this.httpClient.post(`${BACKEND}/kyf/document`, form, {withCredentials: true}).pipe(catchError(err => {
+      this.alertService.doAlert(err.error);
+      return throwError(() => err);
+    }));
+  }
 }

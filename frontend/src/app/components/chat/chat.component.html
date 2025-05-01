@@ -1,4 +1,6 @@
-<main class="bg-neutral-950 h-screen flex flex-col-reverse lg:flex-row p-4 gap-4 lg:p-16 lg:gap-8 text-white overflow-hidden">
+<main class="bg-neutral-950 h-screen flex flex-col text-white overflow-hidden">
+  <app-header></app-header>
+  <div class="flex h-full w-full flex-col-reverse lg:flex-row p-4 gap-4 lg:p-16 lg:gap-8 overflow-hidden">
     <section id="chat-section" class="flex flex-col gap-4 h-full lg:min-w-[800px]">
       <div id="chat-container" class="w-full border border-neutral-800 h-full rounded-lg relative flex flex-col gap-4 p-4 overflow-y-auto overflow-x-hidden" >
         <div class="blur-container absolute w-full h-full flex justify-center items-center top-0 left-0">
@@ -13,7 +15,7 @@
                         </div>
                     }
                     <div [class]="`p-4 border rounded-lg  ${message.role === 'assistant' ? 'bg-blue-950/30 border-blue-950/30' : 'bg-neutral-900/30 border-neutral-900 '}`">
-                        <markdown [data]="message.message">
+                        <markdown [data]="message.message" class="text-justify flex flex-col gap-4">
                             
                         </markdown>
                     </div>
@@ -39,4 +41,6 @@
           <p class="text-xl sm:text-2xl max-w-[30ch]">Tire duvidas ou converse sobre o time da Fúria com o FuriaChat</p>
       </div>
     </section>
-  </main>
+  </div>
+
+</main>

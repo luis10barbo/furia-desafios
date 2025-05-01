@@ -1,0 +1,54 @@
+<main class="bg-neutral-950 h-screen flex flex-col gap-4  lg:gap-8 text-white overflow-hidden">
+    @if (loading || !user) {
+        <div class="w-full h-full flex justify-center items-center">
+            <div class="loader"></div>
+        </div>
+    }
+    @else {
+        <app-header exit-href="/kyf"></app-header>
+        @if (user.verified) {
+            <section class="flex-1 flex flex-col justify-center items-center h-full w-full gap-16">
+                <h1 class="font-bold text-3xl">Você já foi verificado :)</h1>
+                <a href="/kyf/profile" atype="button" class="p-4 min-w-[200px] text-center  border border-neutral-700 text-white rounded-md hover:border-neutral-600 hover:bg-neutral-900 duration-75 cursor-pointer">Voltar para Perfil</a>
+            </section>
+        } @else {
+            <div class="flex flex-row h-full">
+                <section class="flex-1 flex flex-col justify-center items-center h-full ">
+                    <div class="w-[50ch] flex flex-col gap-8">
+                        <h1 class="font-bold text-3xl">Verifique sua Identidade</h1>
+                        <p class="text-justify">Envie fotos de um documento válido para nós verificarmos que você é realmente você. 
+            
+                            Essas fotos serão utilizadas apenas para sua verificação e não seram guardadas.</p>
+                    </div>
+                </section>
+                <section class="flex flex-1 justify-center items-center gap-8 p-8">
+                    <form class="flex flex-col gap-8 items-center" >
+                        <div class="document-holder flex gap-8">
+                            <button type="button" (drop)="selectFrontDocument($event)" (click)="selectFrontDocument()" ondrop="" [class]="`${draggingFile ? 'cursor-grabbing' : ''} overflow-hidden border-neutral-700 relative p-4 flex justify-center items-center text-center border aspect-square w-[350px] rounded-xl hover:border-neutral-600 hover:bg-neutral-900 cursor-pointer duration-75`">
+                                <p class="absolute w-full top-8 left-0 font-bold">Frente</p>
+                                <input type="file" #frontDocument class="hidden" (change)="selectFrontDocument($event)" accept="image/png, image/jpeg" >
+                                @if (frontDocumentFilePreview) {
+                                    <img [src]="frontDocumentFilePreview" alt="" class="w-full h-full absolute opacity-20">
+                                }
+                                Arraste aqui ou clique para selecionar uma imagem da frente do documento 
+                            </button>
+                            <button type="button" (drop)="selectBackDocument($event)" (click)="selectBackDocument()" [class]="` ${draggingFile ? 'cursor-grabbing' : ''} border-neutral-700 relative p-4 flex justify-center items-center text-center border aspect-square w-[350px] rounded-xl hover:border-neutral-600 hover:bg-neutral-900 cursor-pointer duration-75`">
+                                <p class="absolute w-full top-8 left-0 font-bold">Verso</p>
+                                <input type="file" #backDocument class="hidden" (change)="selectBackDocument($event)" accept="image/png, image/jpeg" >
+                                @if (backDocumentFilePreview) {
+                                    <img [src]="backDocumentFilePreview" alt="" class="w-full h-full absolute opacity-20">
+                                }
+                                Arraste aqui ou clique para uma selecionar imagem do verso do documento 
+                            </button>
+                        </div>
+                        <button type="button" (click)="submitDocuments()" class="p-4 min-w-[350px]  border border-neutral-700 text-white rounded-md hover:border-neutral-600 hover:bg-neutral-900 duration-75 cursor-pointer">Verificar</button>
+                    </form>
+                    
+                </section>
+            </div>
+        }
+        
+        
+    }
+</main>
+

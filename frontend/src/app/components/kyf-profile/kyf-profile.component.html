@@ -1,11 +1,8 @@
-<main class="bg-neutral-950 h-screen flex flex-col lg:flex-row gap-4  lg:gap-8 text-white overflow-hidden">
-    @if (loading) {
+<main class="bg-neutral-950 h-screen flex flex-col gap-4  lg:gap-8 text-white overflow-hidden">
+    <app-header exit-href="/kyf"></app-header>
+    @if (isLoading || !user) {
         <div class="w-full h-full flex justify-center items-center">
             <div class="loader"></div>
         </div>
     }
-    @else {
-        <button (click)="doLogout()">Logout</button>
-    }
 </main>
-

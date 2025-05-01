@@ -1,6 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
 
+body {
+        background-color: oklch(14.5% 0 0);
+}
+
+a {
+        color: rgb(165, 128, 252)
+}
 
 /* HTML: <div class="loader"></div> */
 .loader {

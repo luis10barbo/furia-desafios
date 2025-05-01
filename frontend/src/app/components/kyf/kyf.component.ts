@@ -5,6 +5,7 @@ import { UserModel } from '../../models/userModel';
 import { PurchaseModel } from '../../models/purchaseModel';
 import { EventModel } from '../../models/eventModel';
 import { Router, RouterModule } from '@angular/router';
+import { uuidv4 } from '../../utils/uuid';
 
 @Component({
   selector: 'app-kyf',
@@ -19,9 +20,10 @@ export class KyfComponent {
   constructor(private kyfService: KyfService, private router: Router) {
     // this.user = kyfService.userSubject.getValue();
     kyfService.loadingSubject.subscribe((val) => {
+      
       if (!val) {
         if (kyfService.userSubject.getValue()) {
-          this.router.navigate(["/kyf/profile"])
+          this.gotoProfile();
         } else {
           this.loading = false;
         }
@@ -36,6 +38,10 @@ export class KyfComponent {
 
   @ViewChild('eventsInput') eventsInput!: ElementRef<HTMLInputElement>;
   @ViewChild('purchasesInput') purchasesInput!: ElementRef<HTMLInputElement>;
+
+  gotoProfile() {
+    window.location.href = "/kyf/profile";
+  }
 
   loginFormGroup = new FormGroup({
     email: new FormControl(""),
@@ -64,7 +70,7 @@ export class KyfComponent {
       if (event.length < 1) {
         return [];
       }
-      const newValue: EventModel = {id: crypto.randomUUID(), name: event, url: ""};
+      const newValue: EventModel = {id: uuidv4(), name: event, url: ""};
       return newValue;
     });
   
@@ -79,7 +85,7 @@ export class KyfComponent {
       if (event.length < 1) {
         return [];
       }
-      const newValue: EventModel = {id: crypto.randomUUID(), name: event, url: ""};
+      const newValue: EventModel = {id: uuidv4(), name: event, url: ""};
       return newValue;
     });
   }
@@ -91,7 +97,7 @@ export class KyfComponent {
   doLogin() {
     this.kyfService.doLogin({email: this.loginFormGroup.value.email!, password: this.loginFormGroup.value.password!})!.subscribe((val) => {
       if (val) {
-        this.router.navigate(["/kyf/profile"])
+        this.gotoProfile();
       }
     })
   }
@@ -108,10 +114,11 @@ export class KyfComponent {
       phone: this.registerFormGroup.value.phone!,
       interests: this.registerFormGroup.value.interests!,
       events: this.events,
-      purchases: this.purchases
+      purchases: this.purchases,
+      verified: false
     })!.subscribe((val) => {
       if (val) {
-        this.router.navigate(["/kyf/profile"])
+        this.gotoProfile();
       }
     })
   }

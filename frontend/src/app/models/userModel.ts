@@ -22,4 +22,5 @@ export type UserModel = {
     events: EventModel[];        // Assuming Event is another interface
   
     session?: SessionModel;      // Assuming Session is another interface
+    verified: boolean;
   }

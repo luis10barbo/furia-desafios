@@ -1,34 +1,41 @@
 import { Component } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
-import { routes } from '../../app.routes';
 import { KyfService } from '../../services/kyf/kyf.service';
+import { UserModel } from '../../models/userModel';
+import { HeaderComponent } from "../header/header.component";
 
 @Component({
   selector: 'app-kyf-profile',
+  imports: [HeaderComponent],
   templateUrl: './kyf-profile.component.html',
-  styleUrl: './kyf-profile.component.css',
-  imports: [RouterModule]
+  styleUrl: './kyf-profile.component.css'
 })
 export class KyfProfileComponent {
-  loading = true;
-  constructor(private kyfService: KyfService, private router: Router) {
+  user?: UserModel
+  isLoading = true;
+  constructor(private kyfService: KyfService) {
     kyfService.loadingSubject.subscribe((isLoading) => {
       if (isLoading) {
         return;
       }  
-      if (kyfService.userSubject.getValue()) { 
+      this.user = kyfService.userSubject.getValue();
+      if (this.user) { 
+        this.isLoading = false;
+        if (!this.user.verified) {
+          this.gotoVerify();
+        }
         return;
       }
-      this.gotoMainPage();
+      window.location.href = "/kyf"
+
+      
+
+      kyfService.userSubject.subscribe((user) => {
+        this.user = user;
+      }) 
     })
   }
 
-  gotoMainPage() {
-    this.router.navigate(["/kyf"]);
-  }
-
-  doLogout() {
-    this.kyfService.doLogout().subscribe();
-    this.gotoMainPage();
+  gotoVerify() {
+    window.location.href = "/kyf/verify"
   }
 }

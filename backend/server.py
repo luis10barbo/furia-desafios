@@ -6,7 +6,7 @@ from routes.chat_route import chat_bp
 from routes.kyf_route import kyf_bp
 
 app = Quart(__name__)
-app = cors(app, allow_origin=["http://localhost:4200", "https://furia.luisbrb.com.br/"], allow_credentials=True)
+app = cors(app, allow_origin=["http://localhost:4200", "https://furia.luisbrb.com.br", "http://192.168.0.195:4200"], allow_credentials=True)
 app.register_blueprint(chat_bp, url_prefix='/chat')
 app.register_blueprint(kyf_bp, url_prefix='/kyf')
 
@@ -18,7 +18,7 @@ async def startup():
 
 def main() -> None:
     print("starting server!")
-    app.run(debug=True, port=8000)
+    app.run(host="0.0.0.0", port=8000)
     
 
 if __name__ == "__main__":

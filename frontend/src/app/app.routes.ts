@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { ChatComponent } from './components/chat/chat.component';
 import { KyfComponent } from './components/kyf/kyf.component';
+import { KyfVerifyComponent } from './components/kyf-verify/kyf-verify.component';
 import { KyfProfileComponent } from './components/kyf-profile/kyf-profile.component';
 
 export const routes: Routes = [
@@ -11,6 +12,10 @@ export const routes: Routes = [
     {
         path: "kyf",
         component: KyfComponent
+    },
+    {
+        path: "kyf/verify",
+        component: KyfVerifyComponent
     },
     {
         path: "kyf/profile",

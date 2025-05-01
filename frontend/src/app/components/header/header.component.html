@@ -1,0 +1,12 @@
+<header class="flex w-full h-fit p-4 items-center gap-8 text-xl">
+    <img src="/static/furia.png" alt="furia logo" class="w-12 h-12 ">
+    <a href="/chat" class="cursor-pointer !text-white border-b border-transparent hover:border-white duration-75">Chat</a>
+    <a href="/kyf" class="cursor-pointer !text-white border-b border-transparent hover:border-white duration-75 mr-auto">KYF</a>
+    
+    @if (user) {
+        <p class="hidden sm:block">{{user.email}}</p>
+        <button (click)="doLogout()" class="underline cursor-pointer">Sair</button>
+    } @else {
+        <a href="/kyf" class="underline cursor-pointer !text-white">Entrar</a>
+    } 
+</header>
