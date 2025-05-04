@@ -16,7 +16,7 @@ app.register_blueprint(auth_bp, url_prefix='/auth')
 
 @app.before_serving
 async def startup():
-    print("Starting server and connecting to DB...")
+    print("connecting to DB...")
     await db.connect()
 
 def main() -> None:

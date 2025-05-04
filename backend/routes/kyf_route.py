@@ -75,7 +75,6 @@ class RegisterBody(TypedDict):
 @kyf_bp.route("/register", methods=["POST"])
 async def register():
     body: RegisterBody = await request.get_json()
-    print(body)
     
     validation_result = validate_attributes(body, required_parameters=['email', 'password', 'first_name', 'last_name', 'phone', 'neighborhood', 'state', 'city', 'purchases', 'events'])
     if validation_result:

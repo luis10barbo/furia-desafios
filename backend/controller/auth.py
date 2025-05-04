@@ -36,7 +36,6 @@ async def get_session(user_id: str | None = None, include_user: bool | None = No
 
 async def get_user():
     session = await get_session(None, True)
-    print(session)
     
     
     if not session or not session.user:
