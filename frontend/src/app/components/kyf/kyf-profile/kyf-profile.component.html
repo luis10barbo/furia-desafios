@@ -26,8 +26,9 @@
                 <div class="flex flex-col interaction-holder border border-neutral-700 p-8 w-full rounded-md gap-4">
                     <h1 class="text-xl">Suas interações recentes com a fúria</h1>
                     @if (user.socialMediaPost.length < 1) {
-                        <div class="w-full h-full flex justify-center items-center">
-                            <div class="loader"></div>
+                        <div class="w-full h-full flex justify-center items-center text-center">
+                            Nenhum post recente relacionado à fúria encontrado.<br>
+                            Tente se conectar ou reconectar ao Reddit
                         </div>
                     } @else {
                         @for (post of user.socialMediaPost; track post.postUrl) {

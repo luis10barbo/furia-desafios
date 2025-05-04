@@ -14,6 +14,7 @@ import { HeaderComponent } from '../../header/header.component';
 })
 export class KyfVerifyComponent {
   loading = true;
+  verifyingDocument = false;
   user?: UserModel = undefined;
 
   @ViewChild('frontDocument') frontDocument!: ElementRef<HTMLInputElement>;
@@ -115,7 +116,9 @@ export class KyfVerifyComponent {
       this.notificationService.show({title:"Erro ao enviar documentos", description:"Verso do documento faltando."});
       return;
     }
+    this.verifyingDocument = true;
     this.kyfService.submitDocument(this.frontDocumentFile, this.backDocumentFile).subscribe((val) => {
+      this.verifyingDocument = false;
       window.location.href = "/kyf/profile"
     });
   }

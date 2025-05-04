@@ -24,7 +24,7 @@
                 <section class="flex flex-1 justify-center items-center gap-8 p-8">
                     <form class="flex flex-col gap-8 items-center" >
                         <div class="document-holder flex gap-8">
-                            <button type="button" (drop)="selectFrontDocument($event)" (click)="selectFrontDocument()" ondrop="" [class]="`${draggingFile ? 'cursor-grabbing' : ''} overflow-hidden border-neutral-700 relative p-4 flex justify-center items-center text-center border aspect-square w-[350px] rounded-xl hover:border-neutral-600 hover:bg-neutral-900 cursor-pointer duration-75`">
+                            <button [disabled]="verifyingDocument" type="button" (drop)="selectFrontDocument($event)" (click)="selectFrontDocument()" ondrop="" [class]="`${draggingFile ? 'cursor-grabbing' : ''} overflow-hidden border-neutral-700 relative p-4 flex justify-center items-center text-center border aspect-square w-[350px] rounded-xl hover:border-neutral-600 hover:bg-neutral-900 cursor-pointer duration-75`">
                                 <p class="absolute w-full top-8 left-0 font-bold">Frente</p>
                                 <input type="file" #frontDocument class="hidden" (change)="selectFrontDocument($event)" accept="image/png, image/jpeg" >
                                 @if (frontDocumentFilePreview) {
@@ -32,7 +32,7 @@
                                 }
                                 Arraste aqui ou clique para selecionar uma imagem da frente do documento 
                             </button>
-                            <button type="button" (drop)="selectBackDocument($event)" (click)="selectBackDocument()" [class]="` ${draggingFile ? 'cursor-grabbing' : ''} border-neutral-700 relative p-4 flex justify-center items-center text-center border aspect-square w-[350px] rounded-xl hover:border-neutral-600 hover:bg-neutral-900 cursor-pointer duration-75`">
+                            <button [disabled]="verifyingDocument" type="button" (drop)="selectBackDocument($event)" (click)="selectBackDocument()" [class]="` ${draggingFile ? 'cursor-grabbing' : ''} border-neutral-700 relative p-4 flex justify-center items-center text-center border aspect-square w-[350px] rounded-xl hover:border-neutral-600 hover:bg-neutral-900 cursor-pointer duration-75`">
                                 <p class="absolute w-full top-8 left-0 font-bold">Verso</p>
                                 <input type="file" #backDocument class="hidden" (change)="selectBackDocument($event)" accept="image/png, image/jpeg" >
                                 @if (backDocumentFilePreview) {
@@ -41,7 +41,15 @@
                                 Arraste aqui ou clique para uma selecionar imagem do verso do documento 
                             </button>
                         </div>
-                        <button type="button" (click)="submitDocuments()" class="p-4 min-w-[350px]  border border-neutral-700 text-white rounded-md hover:border-neutral-600 hover:bg-neutral-900 duration-75 cursor-pointer">Verificar</button>
+                        <button type="button" [disabled]="verifyingDocument" (click)="submitDocuments()" class="p-4 min-w-[350px] flex justify-center items-center gap-4 border border-neutral-700 text-white rounded-md hover:border-neutral-600 hover:bg-neutral-900 duration-75 cursor-pointer">
+                        
+                        @if (verifyingDocument) {
+                            Verificando
+                            <div class="loader !w-6 !h-6"></div>
+                        } @else {
+                            Verificar
+                        }
+                        </button>
                     </form>
                     
                 </section>

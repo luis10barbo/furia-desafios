@@ -9,9 +9,9 @@ from routes.auth_route import auth_bp
 
 app = Quart(__name__)
 app = cors(app, allow_origin=["http://localhost:4200", "https://furia.luisbrb.com.br", "http://192.168.0.195:4200"], allow_credentials=True)
-app.register_blueprint(chat_bp, url_prefix='/chat')
-app.register_blueprint(kyf_bp, url_prefix='/kyf')
-app.register_blueprint(auth_bp, url_prefix='/auth')
+app.register_blueprint(chat_bp, url_prefix='/api/chat')
+app.register_blueprint(kyf_bp, url_prefix='/api/kyf')
+app.register_blueprint(auth_bp, url_prefix='/api/auth')
 
 
 @app.before_serving

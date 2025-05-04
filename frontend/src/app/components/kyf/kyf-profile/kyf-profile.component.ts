@@ -38,7 +38,7 @@ export class KyfProfileComponent {
   }
 
   setUser(user?: UserModel) {
-    if (this.user && !this.user.verified) {
+    if (user && !user.verified) {
       this.gotoVerify();
     }
 
@@ -63,7 +63,7 @@ export class KyfProfileComponent {
     // });
 
     // window.location.href = `https://twitter.com/i/oauth2/authorize?${params}`;
-    this.notificationService.show({title: "Erro", description: "Devido às grandes limitações no free Tier da API do TWITTER/X, nós decidimos descontinuar a funcionalidade de logar com o Twitter/X"})
+    this.notificationService.show({title: "Erro", description: "Devido às grandes limitações no free Tier da API do TWITTER/X, nós decidimos descontinuar a funcionalidade de login com o Twitter/X"})
   }
 
   async redditAuth() {
