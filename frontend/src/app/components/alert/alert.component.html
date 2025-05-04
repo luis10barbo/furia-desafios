@@ -1,0 +1,16 @@
+<div [class]="`bg-black/50 fixed w-full h-full z-70 flex justify-center items-center duration-150 ${notification ? 'bg-black/50' : 'pointer-events-none bg-transparent'}`">
+    <div [class]="`flex flex-col bg-neutral-950 p-8 w-fit h-fit rounded-md gap-4 min-w-full sm:min-w-[500px] min-h-[300px] max-w-[600px] duration-150 ${notification ? 'opacity-100' : 'opacity-0'}`" [style]="`${notification ? 'transform: translateY(0%)' : 'transform: translateY(-10%)'}`">
+        @if (notification) {
+            <div class="text-container flex flex-col gap-2">
+                <p class="text-xl text-white">
+                    {{ notification.title }}
+                </p>
+                <p class="text-xl text-neutral-200">{{ notification.description }}</p>
+            </div>
+            <footer class="justify-self-end mt-auto flex w-full justify-between items-center">
+                <p class="status">{{ notification.status }} - {{ notificationStatusMessage }}</p>
+                <button (click)="dismiss()" class="border border-neutral-900 px-4 py-2 rounded-md w-fit text-white hover:bg-neutral-900 hover:border-neutral-800 hover:text-white duration-75 cursor-pointer ">Fechar</button>
+            </footer>
+        }
+    </div>
+</div>
