@@ -28,7 +28,7 @@ async def create_session(user_id: str):
     await db.session.create({"cookie": _get_session_id(), "expirationDate": expiration_date, "user": {"connect": {"id": user_id}}})
 
 async def get_session(user_id: str | None = None, include_user: bool | None = None):
-    session = await db.session.find_unique({"cookie": _get_session_id()}, {"user": {"include": {"events": True, "purchases": True, "socialMediaLink": True}}})
+    session = await db.session.find_unique({"cookie": _get_session_id()}, {"user": {"include": {"events": True, "purchases": True, "socialMediaLink": True, "socialMediaPost": True}}})
     if user_id:
         session = await create_session(user_id)
     
