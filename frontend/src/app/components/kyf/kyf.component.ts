@@ -115,7 +115,8 @@ export class KyfComponent {
       interests: this.registerFormGroup.value.interests!,
       events: this.events,
       purchases: this.purchases,
-      verified: false
+      verified: false,
+      socialMediaLink: []
     })!.subscribe((val) => {
       if (val) {
         this.gotoProfile();

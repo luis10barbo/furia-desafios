@@ -4,5 +4,35 @@
         <div class="w-full h-full flex justify-center items-center">
             <div class="loader"></div>
         </div>
+    } @else {
+        <div class="flex w-fill h-full flex-col lg:flex-row">
+            <section class="flex flex-1 justify-center items-center p-8">
+                <div class="w-[50ch] flex flex-col gap-8">
+                    <h1 class="font-bold text-3xl">Vincular redes sociais</h1>
+                    <p class="text-justify">Para fazer uma  análise aprofundada de seu perfil, vincule sua rede social à conta.
+
+                        Nós iremos utilizar seus posts curtidos e visualizados para construir uma imagem melhor sobre você.</p>
+                    <div class="flex gap-4">
+                        
+                        <button class="p-4 flex-1 bg-red-500 shadow-2xl shadow-red-600/20 text-white rounded-md cursor-pointer" (click)="redditAuth()">Reddit {{redditUser?.providerUserNickname ? ` - ${redditUser?.providerUserNickname}` : ""}}</button>
+                        <button class="p-4 flex-1 bg-white text-black rounded-md cursor-pointer" (click)="twitterAuth()">X/Twitter</button>
+                        <!-- <button class="p-4 flex-1 bg-gradient-to-tr from-blue-600 to-pink-600 text-white rounded-md cursor-pointer font-bold" (click)="tiktokAuth()">Tiktok</button> -->
+                        <!-- <button class="p-4 flex-1 bg-gradient-to-tr from-yellow-600 to-rose-600 rounded-md cursor-pointer font-bold" (click)="instagramAuth()">Instagram</button> -->
+                    </div>
+                </div>
+            </section>
+            <section class="flex flex-1 p-8">
+                <div class="interaction-holder border border-neutral-700 p-8 w-full rounded-md">
+                    <h1 class="text-xl">Suas interações recentes com a fúria</h1>
+                    @if (!user.posts) {
+                        <div class="w-full h-full flex justify-center items-center">
+                            <div class="loader"></div>
+                        </div>
+                    } @else {
+
+                    }
+                </div>
+            </section>
+        </div>
     }
 </main>

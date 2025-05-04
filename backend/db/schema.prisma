@@ -55,6 +55,8 @@ model User {
   verified        Boolean    @default(false)
 
   session         Session[]
+
+  socialMediaLink SocialMediaLink[]
 }
 
 model Session {
@@ -64,5 +66,30 @@ model Session {
   userId          String
   user            User      @relation(fields: [userId], references: [id])
   expirationDate  DateTime?
+}
+
+model SocialMediaPost {
+  id String @id @default(cuid())
+  postUrl String @unique
+  postTitle String?
+  postDescription String?
+  socialMedia String
+}
+
+model SocialMediaLink {
+  id String @id @default(cuid())
+  provider String
+
+  accessToken String
+  refreshToken String?
+  expirationDate DateTime
+
+  providerUserId String
+  providerUserNickname String?
+  providerUserEmail String?
+  providerUserUrl String
+  
+  userId String
+  user User @relation(fields: [userId], references: [id])
 }
 

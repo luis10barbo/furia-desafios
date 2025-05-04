@@ -23,4 +23,6 @@ export type UserModel = {
   
     session?: SessionModel;      // Assuming Session is another interface
     verified: boolean;
+    posts?: string[] 
+    socialMediaLink: {id: string, provider: "reddit" | "twitter", accessToken: string, refreshToken: string | null, expirationDate: string, providerUserId: string, providerUserNickname: string, providerUserEmail: string | null, providerUserUrl: string}[]
   }

@@ -2,10 +2,11 @@ import base64
 import json
 from typing import TypedDict, cast
 import bcrypt
-from openai import OpenAI
 from quart import Blueprint, Response, make_response, request
 from utils.auth import auth_logout, create_session, get_user, set_session_id
 from utils.validation import validate_attributes
+
+from controller.chatgpt import gpt_client
 
 from quart.datastructures import FileStorage
 
@@ -135,8 +136,6 @@ async def user():
 
     return await make_response(user.model_dump_json())
 
-client = OpenAI()
-
 class DocumentVerificationReturn(TypedDict):
     tipo_documento: str | None
     imagens_documento_pessoa: bool
@@ -159,7 +158,7 @@ async def submit_documents():
     front_data_url = f"data:{front_document.mimetype};base64,{front_base64}"
     back_data_url = f"data:{back_document.mimetype};base64,{back_base64}"
 
-    response = client.chat.completions.create(
+    response = gpt_client.chat.completions.create(
         model="gpt-4.1-mini",
         messages=[
             {

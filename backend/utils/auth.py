@@ -1,9 +1,15 @@
 import datetime
+from enum import Enum
 from quart import request
 from quart.typing import ResponseTypes
 import uuid
 
 from db import db
+
+class AuthControllerErrors(Enum):
+    ERR_USER_NOT_LOGGED_IN = "ERR_USER_NOT_LOGGED_IN"
+    ERR_TWITTER_NOT_LINKED = "ERR_SOCIAL_MEDIA_NOT_LINKED"
+
 
 AUTH_COOKIE = "session-id"
 
@@ -22,7 +28,7 @@ async def create_session(user_id: str):
     await db.session.create({"cookie": _get_session_id(), "expirationDate": expiration_date, "user": {"connect": {"id": user_id}}})
 
 async def get_session(user_id: str | None = None, include_user: bool | None = None):
-    session = await db.session.find_unique({"cookie": _get_session_id()}, {"user": {"include": {}}})
+    session = await db.session.find_unique({"cookie": _get_session_id()}, {"user": {"include": {"events": True, "purchases": True, "socialMediaLink": True}}})
     if user_id:
         session = await create_session(user_id)
     

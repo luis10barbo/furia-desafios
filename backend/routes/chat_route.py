@@ -1,7 +1,8 @@
 import asyncio
 from typing import Iterable, TypedDict
-from openai import OpenAI, Stream
+from openai import Stream
 from openai.types.chat import ChatCompletionChunk, ChatCompletionMessageParam
+from controller.chatgpt import gpt_client
 
 from quart import Blueprint, Response, request
 
@@ -16,8 +17,6 @@ async def stream(stream: Stream[ChatCompletionChunk]):
 class MessagesQuery(TypedDict):
     message: str
     role: str
-
-client = OpenAI()
 
 @chat_bp.route("/send", methods=["POST"])
 async def send_message():
@@ -49,7 +48,7 @@ async def send_message():
         "content": query
     })
 
-    completion = client.chat.completions.create(
+    completion = gpt_client.chat.completions.create(
     model="gpt-4o-mini-search-preview",
     # model="gpt-4o-mini",
     messages= messages,
