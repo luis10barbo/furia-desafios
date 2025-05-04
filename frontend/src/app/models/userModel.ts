@@ -2,6 +2,7 @@ import { PurchaseModel } from "./purchaseModel";
 import { SessionModel } from "./sessionModel";
 import { EventModel } from "./eventModel";
 
+export type SocialMedia = "reddit" | "twitter";
 export type UserModel = {
     id?: string;
     email: string;
@@ -23,6 +24,6 @@ export type UserModel = {
   
     session?: SessionModel;      // Assuming Session is another interface
     verified: boolean;
-    posts?: string[] 
-    socialMediaLink: {id: string, provider: "reddit" | "twitter", accessToken: string, refreshToken: string | null, expirationDate: string, providerUserId: string, providerUserNickname: string, providerUserEmail: string | null, providerUserUrl: string}[]
+    socialMediaPost: {id: string, postUrl: string, postTitle?: string, postDescription?: string, socialMedia: SocialMedia, interactionType: string}[] 
+    socialMediaLink: {id: string, provider: SocialMedia, accessToken: string, refreshToken: string | null, expirationDate: string, providerUserId: string, providerUserNickname: string, providerUserEmail: string | null, providerUserUrl: string}[]
   }

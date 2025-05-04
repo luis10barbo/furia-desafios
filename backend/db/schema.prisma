@@ -76,6 +76,7 @@ model SocialMediaPost {
   postTitle String?
   postDescription String?
   socialMedia String
+  interactionType String
 
   userId String
   user User @relation(fields: [userId], references: [id])

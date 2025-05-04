@@ -4,10 +4,11 @@ import { UserModel } from '../../models/userModel';
 import { HeaderComponent } from "../header/header.component";
 import { AuthService } from '../../services/auth/auth.service';
 import { NotificationService } from '../../services/notification/notification.service';
+import { MarkdownModule } from 'ngx-markdown';
 
 @Component({
   selector: 'app-kyf-profile',
-  imports: [HeaderComponent],
+  imports: [HeaderComponent, MarkdownModule],
   templateUrl: './kyf-profile.component.html',
   styleUrl: './kyf-profile.component.css'
 })
@@ -23,9 +24,6 @@ export class KyfProfileComponent {
       this.setUser(kyfService.userSubject.getValue());
       if (this.user) { 
         this.isLoading = false;
-        if (!this.user.verified) {
-          this.gotoVerify();
-        }
         return;
       }
       window.location.href = "/kyf"
@@ -39,11 +37,15 @@ export class KyfProfileComponent {
   }
 
   setUser(user?: UserModel) {
+    if (this.user && !this.user.verified) {
+      this.gotoVerify();
+    }
+
     this.user = user;
     this.redditUser = user?.socialMediaLink.find((socialMediaLink) => {
       return socialMediaLink.provider === "reddit";
     })
-    console.log(this.redditUser);
+    console.log(this.user);
   }
 
   async twitterAuth() {

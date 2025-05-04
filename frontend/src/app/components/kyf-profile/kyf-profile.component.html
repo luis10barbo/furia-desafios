@@ -1,10 +1,11 @@
 <main class="bg-neutral-950 h-screen flex flex-col gap-4  lg:gap-8 text-white overflow-hidden">
-    <app-header exit-href="/kyf"></app-header>
+    
     @if (isLoading || !user) {
         <div class="w-full h-full flex justify-center items-center">
             <div class="loader"></div>
         </div>
     } @else {
+        <app-header exit-href="/kyf"></app-header>
         <div class="flex w-fill h-full flex-col lg:flex-row">
             <section class="flex flex-1 justify-center items-center p-8">
                 <div class="w-[50ch] flex flex-col gap-8">
@@ -22,14 +23,24 @@
                 </div>
             </section>
             <section class="flex flex-1 p-8">
-                <div class="interaction-holder border border-neutral-700 p-8 w-full rounded-md">
+                <div class="flex flex-col interaction-holder border border-neutral-700 p-8 w-full rounded-md gap-4">
                     <h1 class="text-xl">Suas interações recentes com a fúria</h1>
-                    @if (!user.posts) {
+                    @if (user.socialMediaPost.length < 1) {
                         <div class="w-full h-full flex justify-center items-center">
                             <div class="loader"></div>
                         </div>
                     } @else {
-
+                        @for (post of user.socialMediaPost; track post.postUrl) {
+                            <a [href]="post.postUrl" class="post !text-white hover:bg-neutral-900 hover:border-neutral-800 border border-neutral-900 duration-75 rounded-md w-full p-4 flex flex-col gap-4 cursor-pointer">
+                                <p class="text-xl">
+                                    {{ post.postTitle }}
+                                </p>
+                                <div class="max-h-40 overflow-auto">
+                                    <markdown class="">{{ post.postDescription }}</markdown>
+                                </div>
+                                <footer class="flex justify-between"><p class="font-bold">{{ post.socialMedia }}</p><p>Tipo de Interação - {{ post.interactionType }}</p></footer>
+                            </a>
+                        }
                     }
                 </div>
             </section>

@@ -126,5 +126,5 @@ async def add_reddit_furia_related_content():
 
         data = like["data"]
         post_url = "https://reddit.com" + data["permalink"] # type: ignore
-        await db.socialmediapost.upsert({"postUrl": "REDDIT"+post_url}, {"create": {"postDescription": data.get("selftext"), "postTitle": data.get("title"), "postUrl": post_url, "socialMedia": "Reddit", "user": {"connect": {"id": user.id}}}, "update": {}})
+        await db.socialmediapost.upsert({"postUrl": "REDDIT"+post_url}, {"create": {"postDescription": data.get("selftext"), "postTitle": data.get("title"), "postUrl": post_url, "socialMedia": "Reddit", "user": {"connect": {"id": user.id}}, "interactionType": "Upvote"}, "update": {}})
     

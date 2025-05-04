@@ -116,7 +116,8 @@ export class KyfComponent {
       events: this.events,
       purchases: this.purchases,
       verified: false,
-      socialMediaLink: []
+      socialMediaLink: [],
+      socialMediaPost: []
     })!.subscribe((val) => {
       if (val) {
         this.gotoProfile();
