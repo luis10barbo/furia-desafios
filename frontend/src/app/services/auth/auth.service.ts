@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BACKEND } from '../../constants';
+
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs';
+import { BACKEND } from '@/app/constants';
 import { NotificationService } from '../notification/notification.service';
+
 
 @Injectable({
   providedIn: 'root'

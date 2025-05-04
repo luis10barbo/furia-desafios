@@ -1,5 +1,5 @@
+import { NotificationType } from '@/app/models/notificationModel';
 import { Injectable } from '@angular/core';
-import { NotificationType } from '../../models/notificationModel';
 import { Observable, of, Subject, tap } from 'rxjs';
 
 @Injectable({

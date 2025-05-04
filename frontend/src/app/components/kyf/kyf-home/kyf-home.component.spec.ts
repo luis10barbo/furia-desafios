@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { KyfComponent } from './kyf.component';
+import { KyfComponent } from './kyf-home.component';
 
 describe('KyfComponent', () => {
   let component: KyfComponent;

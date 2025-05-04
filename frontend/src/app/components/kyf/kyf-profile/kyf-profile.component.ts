@@ -1,11 +1,11 @@
+import { UserModel } from '@/app/models/userModel';
+import { AuthService } from '@/app/services/auth/auth.service';
+import { KyfService } from '@/app/services/kyf/kyf.service';
+import { NotificationService } from '@/app/services/notification/notification.service';
+import { environment } from '@/environments/environment';
 import { Component } from '@angular/core';
-import { KyfService } from '../../services/kyf/kyf.service';
-import { UserModel } from '../../models/userModel';
-import { HeaderComponent } from "../header/header.component";
-import { AuthService } from '../../services/auth/auth.service';
-import { NotificationService } from '../../services/notification/notification.service';
 import { MarkdownModule } from 'ngx-markdown';
-import { environment } from '../../../environments/environment';
+import { HeaderComponent } from '@/app/components/header/header.component';
 
 @Component({
   selector: 'app-kyf-profile',

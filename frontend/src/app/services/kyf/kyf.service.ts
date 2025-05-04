@@ -1,7 +1,7 @@
+import { BACKEND } from '@/app/constants';
+import { UserModel } from '@/app/models/userModel';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BACKEND } from '../../constants';
-import { UserModel } from '../../models/userModel';
 import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';
 import { NotificationService } from '../notification/notification.service';
 

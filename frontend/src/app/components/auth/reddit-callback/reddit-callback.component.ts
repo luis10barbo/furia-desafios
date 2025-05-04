@@ -1,6 +1,6 @@
+import { AuthService } from '@/app/services/auth/auth.service';
+import { NotificationService } from '@/app/services/notification/notification.service';
 import { Component } from '@angular/core';
-import { AuthService } from '../../../services/auth/auth.service';
-import { NotificationService } from '../../../services/notification/notification.service';
 
 @Component({
   selector: 'app-reddit-callback',

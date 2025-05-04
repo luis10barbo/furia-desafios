@@ -1,6 +1,7 @@
+import { UserModel } from '@/app/models/userModel';
+import { KyfService } from '@/app/services/kyf/kyf.service';
 import { Component, Input } from '@angular/core';
-import { KyfService } from '../../services/kyf/kyf.service';
-import { UserModel } from '../../models/userModel';
+
 
 @Component({
   selector: 'app-header',

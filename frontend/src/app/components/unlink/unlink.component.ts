@@ -1,8 +1,9 @@
+import { UserModel } from '@/app/models/userModel';
+import { AuthService } from '@/app/services/auth/auth.service';
+import { KyfService } from '@/app/services/kyf/kyf.service';
 import { Component } from '@angular/core';
-import { UserModel } from '../../models/userModel';
-import { AuthService } from '../../services/auth/auth.service';
-import { KyfService } from '../../services/kyf/kyf.service';
-import { HeaderComponent } from "../header/header.component";
+import { HeaderComponent } from '../header/header.component';
+
 
 @Component({
   selector: 'app-unlink',

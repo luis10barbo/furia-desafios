@@ -1,6 +1,6 @@
+import { NotificationType } from '@/app/models/notificationModel';
+import { NotificationService } from '@/app/services/notification/notification.service';
 import { Component } from '@angular/core';
-import { NotificationType } from '../../models/notificationModel';
-import { NotificationService } from '../../services/notification/notification.service';
 
 @Component({
   selector: 'app-alert',

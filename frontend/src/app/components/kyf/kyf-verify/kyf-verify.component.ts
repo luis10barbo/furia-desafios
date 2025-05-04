@@ -1,11 +1,10 @@
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { routes } from '../../app.routes';
-import { KyfService } from '../../services/kyf/kyf.service';
-import { UserModel } from '../../models/userModel';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { HeaderComponent } from "../header/header.component";
-import { NotificationService } from '../../services/notification/notification.service';
+import { UserModel } from '@/app/models/userModel';
+import { KyfService } from '@/app/services/kyf/kyf.service';
+import { NotificationService } from '@/app/services/notification/notification.service';
+import { HeaderComponent } from '../../header/header.component';
 
 @Component({
   selector: 'app-kyf-verify',

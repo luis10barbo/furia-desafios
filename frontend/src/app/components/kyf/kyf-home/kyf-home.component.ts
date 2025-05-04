@@ -1,17 +1,19 @@
+import { EventModel } from '@/app/models/eventModel';
+import { PurchaseModel } from '@/app/models/purchaseModel';
+import { UserModel } from '@/app/models/userModel';
+import { KyfService } from '@/app/services/kyf/kyf.service';
+import { uuidv4 } from '@/app/utils/uuid';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { KyfService } from '../../services/kyf/kyf.service';
-import { UserModel } from '../../models/userModel';
-import { PurchaseModel } from '../../models/purchaseModel';
-import { EventModel } from '../../models/eventModel';
-import { Router, RouterModule } from '@angular/router';
-import { uuidv4 } from '../../utils/uuid';
+import { RouterModule, Router } from '@angular/router';
+
+
 
 @Component({
   selector: 'app-kyf',
   imports: [ReactiveFormsModule, RouterModule],
-  templateUrl: './kyf.component.html',
-  styleUrl: './kyf.component.css'
+  templateUrl: './kyf-home.component.html',
+  styleUrl: './kyf-home.component.css'
 })
 export class KyfComponent { 
   user?: UserModel = undefined; 

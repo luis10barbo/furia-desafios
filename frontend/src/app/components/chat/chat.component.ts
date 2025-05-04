@@ -1,9 +1,9 @@
+import { Message, ChatService } from '@/app/services/chat/chat.service';
+import { uuidv4 } from '@/app/utils/uuid';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import { ChatService, Message } from '../../services/chat/chat.service';
 import { MarkdownModule } from 'ngx-markdown';
-import { HeaderComponent } from "../header/header.component";
-import { uuidv4 } from "../../utils/uuid" 
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-chat',

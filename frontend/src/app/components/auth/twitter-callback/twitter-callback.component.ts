@@ -1,8 +1,8 @@
+import { BACKEND } from '@/app/constants';
+import { NotificationService } from '@/app/services/notification/notification.service';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { BACKEND } from '../../../constants';
 import { catchError } from 'rxjs';
-import { NotificationService } from '../../../services/notification/notification.service';
 
 @Component({
   selector: 'app-twitter-callback',
