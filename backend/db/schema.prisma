@@ -57,6 +57,8 @@ model User {
   session         Session[]
 
   socialMediaLink SocialMediaLink[]
+
+  socialMediaPost SocialMediaPost[]
 }
 
 model Session {
@@ -74,6 +76,9 @@ model SocialMediaPost {
   postTitle String?
   postDescription String?
   socialMedia String
+
+  userId String
+  user User @relation(fields: [userId], references: [id])
 }
 
 model SocialMediaLink {
