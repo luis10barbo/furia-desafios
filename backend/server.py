@@ -1,3 +1,4 @@
+import dotenv
 from quart import Quart
 from quart_cors import cors # type:ignore 
 
@@ -19,6 +20,7 @@ async def startup():
     await db.connect()
 
 def main() -> None:
+    dotenv.dotenv_values(".env")
     print("starting server!")
     app.run(host="0.0.0.0", port=8000)
     

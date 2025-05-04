@@ -72,7 +72,6 @@ async def reddit_get_likes(access_token: str | None = None, user: User | None = 
     return RedditUpvotes
 
 def check_if_is_furia_related(like: Child):
-    # TODO: add ai checking
     data = like["data"]
     title = data.get("title")
     post = data.get("selftext")

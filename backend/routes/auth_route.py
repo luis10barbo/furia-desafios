@@ -1,5 +1,6 @@
 import asyncio
 import datetime
+import os
 from typing import TypedDict
 import httpx
 from quart import Blueprint, request
@@ -12,10 +13,9 @@ from controller.auth import get_user
 
 auth_bp = Blueprint("auth", __name__)
     
-# TODO: PUT IN .ENV
-REDDIT_REDIRECT_URI = "http://localhost:4200/auth/reddit"
-REDDIT_CLIENT_ID = "YZ-XJOkoR7Zv6R8fTww3gQ"
-REDDIT_CLIENT_SECRET = "naSb0J9bmOcJc0Es3JMOfw2Qb8J_YA"
+REDDIT_REDIRECT_URI = os.environ["REDDIT_REDIRECT_URI"]
+REDDIT_CLIENT_ID = os.environ["REDDIT_CLIENT_ID"]
+REDDIT_CLIENT_SECRET = os.environ["REDDIT_CLIENT_SECRET"]
 
 class RedditTokenResponse(TypedDict):
     access_token: str

@@ -1,3 +1,4 @@
 env/Lib
 __pycache__
 *.db
+.env
