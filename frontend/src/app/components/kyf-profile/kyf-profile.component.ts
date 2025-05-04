@@ -3,7 +3,6 @@ import { KyfService } from '../../services/kyf/kyf.service';
 import { UserModel } from '../../models/userModel';
 import { HeaderComponent } from "../header/header.component";
 import { AuthService } from '../../services/auth/auth.service';
-import { AlertService } from '../../services/alert/alert.service';
 import { NotificationService } from '../../services/notification/notification.service';
 
 @Component({

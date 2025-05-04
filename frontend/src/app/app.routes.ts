@@ -29,10 +29,6 @@ export const routes: Routes = [
         component: ChatComponent
     },
     {
-        path: "auth/twitter",
-        component: TwitterCallbackComponent
-    },
-    {
         path: "auth/reddit",
         component: RedditCallbackComponent
     },

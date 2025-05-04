@@ -4,8 +4,8 @@ import { routes } from '../../app.routes';
 import { KyfService } from '../../services/kyf/kyf.service';
 import { UserModel } from '../../models/userModel';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { AlertService } from '../../services/alert/alert.service';
 import { HeaderComponent } from "../header/header.component";
+import { NotificationService } from '../../services/notification/notification.service';
 
 @Component({
   selector: 'app-kyf-verify',
@@ -28,7 +28,7 @@ export class KyfVerifyComponent {
 
   draggingFile = false;
 
-  constructor(private kyfService: KyfService, private alertService: AlertService) {
+  constructor(private kyfService: KyfService, private notificationService: NotificationService) {
     kyfService.loadingSubject.subscribe((isLoading) => {
       if (isLoading) {
         return;
@@ -109,11 +109,11 @@ export class KyfVerifyComponent {
 
   submitDocuments() {
     if (!this.frontDocumentFile) {
-      this.alertService.doAlert("Frente do documento faltando.");
+      this.notificationService.show({title:"Erro ao enviar documentos", description:"Frente do documento faltando."});
       return;
     }
     if (!this.backDocumentFile) {
-      this.alertService.doAlert("Verso do documento faltando.");
+      this.notificationService.show({title:"Erro ao enviar documentos", description:"Verso do documento faltando."});
       return;
     }
     this.kyfService.submitDocument(this.frontDocumentFile, this.backDocumentFile).subscribe((val) => {
