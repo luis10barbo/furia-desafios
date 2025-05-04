@@ -7,7 +7,7 @@ from quart import Blueprint, request
 from controller.reddit import RedditControllerError, add_reddit_furia_related_content, reddit_get_user_info
 from db import db
 from model.providers import Providers
-from utils.auth import get_user
+from controller.auth import get_user
 
 
 auth_bp = Blueprint("auth", __name__)

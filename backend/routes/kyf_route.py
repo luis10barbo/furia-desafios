@@ -3,7 +3,7 @@ import json
 from typing import TypedDict, cast
 import bcrypt
 from quart import Blueprint, Response, make_response, request
-from utils.auth import auth_logout, create_session, get_user, set_session_id
+from controller.auth import auth_logout, create_session, get_user, set_session_id
 from utils.validation import validate_attributes
 
 from controller.chatgpt import gpt_client

@@ -5,7 +5,7 @@ import httpx
 from db import db
 from model.reddit.user import RedditUser
 from model.reddit.listing import Child, RedditListingResponse
-from utils.auth import get_user
+from controller.auth import get_user
 from prisma.models import User
 from controller.chatgpt import gpt_client
 
