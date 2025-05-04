@@ -1,1 +1,0 @@
-export const BACKEND = "http://192.168.0.195:8000"

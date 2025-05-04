@@ -1,4 +1,4 @@
-import { BACKEND } from '@/app/constants';
+import { environment } from '@/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -13,7 +13,7 @@ export class ChatService {
   constructor(private httpClient: HttpClient) {}
 
   public async queryChat(query: string, messageHistory: Message[]) {
-    const response = await fetch(`${BACKEND}/chat/send?query=${query}`, {
+    const response = await fetch(`${environment.BACKEND}/chat/send?query=${query}`, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json"

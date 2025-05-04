@@ -1,5 +1,5 @@
-import { BACKEND } from '@/app/constants';
 import { NotificationService } from '@/app/services/notification/notification.service';
+import { environment } from '@/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { catchError } from 'rxjs';
@@ -25,7 +25,7 @@ export class TwitterCallbackComponent {
       return;
     }
 
-    this.httpClient.post(`${BACKEND}/auth/twitter`, { code, code_verifier: codeVerifier }, {withCredentials: true}).pipe(catchError((err) => {
+    this.httpClient.post(`${environment.BACKEND}/auth/twitter`, { code, code_verifier: codeVerifier }, {withCredentials: true}).pipe(catchError((err) => {
       console.log(err);
       this.notificationService.show({title: "Erro ao autorizar twitter", description: err});
       return err;

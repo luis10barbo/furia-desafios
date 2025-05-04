@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs';
-import { BACKEND } from '@/app/constants';
 import { NotificationService } from '../notification/notification.service';
+import { environment } from '@/environments/environment';
 
 
 @Injectable({
@@ -49,7 +49,7 @@ export class AuthService {
       return;
     }
 
-    this.httpClient.post(`${BACKEND}/auth/reddit`, { code, code_verifier: codeVerifier }, {withCredentials: true}).pipe(catchError((err) => {
+    this.httpClient.post(`${environment.BACKEND}/auth/reddit`, { code, code_verifier: codeVerifier }, {withCredentials: true}).pipe(catchError((err) => {
       this.notificationService.show({title: "Erro ao autorizar Reddit", description: JSON.stringify(err)});
       return err;
     })).subscribe((response) => {
