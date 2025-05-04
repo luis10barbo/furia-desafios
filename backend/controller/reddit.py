@@ -79,7 +79,7 @@ def check_if_is_furia_related(like: Child):
     subreddit = data.get("subreddit")
 
     response = gpt_client.chat.completions.create(
-        model="gpt-4.1-mini",
+        model="gpt-4o-mini",
         messages=[
             {
                 "role": "user",
