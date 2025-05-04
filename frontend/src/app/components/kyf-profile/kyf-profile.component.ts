@@ -5,6 +5,7 @@ import { HeaderComponent } from "../header/header.component";
 import { AuthService } from '../../services/auth/auth.service';
 import { NotificationService } from '../../services/notification/notification.service';
 import { MarkdownModule } from 'ngx-markdown';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-kyf-profile',
@@ -68,11 +69,10 @@ export class KyfProfileComponent {
   async redditAuth() {
     const { state } = await this.authService.generateOAuthParams();
 
-    // TODO: put in .env
     const params = new URLSearchParams({
       response_type: 'code',
-      client_id: 'YZ-XJOkoR7Zv6R8fTww3gQ',
-      redirect_uri: 'http://localhost:4200/auth/reddit', // adjust as needed
+      client_id: environment.REDDIT_CLIENT_ID,
+      redirect_uri: environment.REDDIT_REDIRECT_URI,
       scope: 'identity history read',
       state,
       // code_challenge: codeChallenge,
