@@ -67,22 +67,79 @@ cd backend
 ```
  - Ative o ambiente virtual do python
 ```powershell
-./env/Scripts/Activate.ps1
+./venv/Scripts/Activate.ps1
 ```
 - Instale as dependências do python
 ```powershell
 python -m pip install -r requirements.txt
 ```
-
-- Gere um banco de dados
+- Crie uma copia do exemplo **.env.example** nomeada **.env**
 ```powershell
-cd db
-python -m pip install prisma
-python -m prisma generate
-cd ../
+cp .env.example .env
+```
+
+- Configure o **.env** com **CHAVE** = **VALOR**
+```python
+REDDIT_CLIENT_ID= #REDDIT APP CLIENT ID PARA OAUTH2
+REDDIT_CLIENT_SECRET= #REDDIT APP CLIENT SECRET PARA OAUTH2
+REDDIT_REDIRECT_URI= #REDDIT APP REDIRECT URI PARA OAUTH2
+OPENAI_API_KEY= #OPENAI API KEY PARA CHAMADAS CHATGPT
+SERVER_PORT= #USAR PORTA CUSTOMIZADA PARA O SERVIDOR
 ```
 
 - Execute o servidor
 ```powershell
 python server.py
+```
+
+## Estrutura de pastas
+### backend
+
+```python
+backend
+├── controller
+│   ├── auth.py # Arquivo que guarda funcoes relacionadas a autenticacao do programa
+│   ├── chatgpt.py # Arquivo de inicializacao do cliente chatgpt
+│   ├── reddit.py # Arquivo que guarda funcoes de request para reddit
+├── routes 
+│   ├── auth_route.py # Rotas relacionadas a autenticacao
+│   ├── chat_route.py # Rotas relacionadas a pagina de chat
+│   ├── kyf_route.py # Rotas relacionadas a  pagina de kyf (Know Your Fan)
+├── model 
+│   ├── providers.py # Representa os providers (redes sociais) que o programa suporta
+│   ├── reddit
+│   │   ├── listing.py # Representacoes de retorno do get de upvotes reddit
+│   │   ├── user.py # Representacoes de retorno do get de perfil usuario reddit
+├── db
+│   ├── db.py # Inicializacao do banco de dados
+│   ├── schema.prisma # Schema do banco de dados
+├── utils
+└── ├── validation.py # Funcoes utilitarias pra ajudar na validacao
+
+```
+### frontend
+```python
+src
+├── app
+│   ├── components # Componentes ou paginas do frontend
+│   │   ├── alert # Componente de popup de notificacao/alerta
+│   │   ├── auth # Componente de paginas de autenticacao, contem callback oauth do reddit 
+│   │   ├── chat # Pagina /chat
+│   │   ├── header # Header utilizado em todas paginas
+│   │   ├── kyf # Pagina /kyf
+│   ├── models 
+│   │   ├── userModel.ts # Representa tipo usuario
+│   │   ├── sessionModel.ts # Representa tipo sessao, que fica dentro de usuario
+│   │   ├── purchaseModel.ts # Representa tipo compra, que fica dentro de usuario
+│   │   ├── eventModel.ts # Representa tipo evento, que fica dentro de usuario
+│   │   ├── notificationModel.ts # Representa tipo notificacao, utilizado em alertas no programa
+│   ├── services 
+│   │   ├── auth # Funcoes de autenticacao oAuth2 via Reddit
+│   │   ├── chat # Funcoes de interacao com backend da pagina Chat
+│   │   ├── kyf # Funcoes de interacao com o backend da pagina Kyf
+│   │   ├── notification  # Funcoes de interacao com o componente de alerta/notificacao
+│   ├── utils # Funcoes extras para auxiliar no programa
+└── environments # Configuracoes do frontend
+
+
 ```
