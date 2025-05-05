@@ -67,11 +67,19 @@ cd backend
 ```
  - Ative o ambiente virtual do python
 ```powershell
-./venv/Scripts/Activate.ps1
+./env/Scripts/Activate.ps1
 ```
 - Instale as dependências do python
 ```powershell
 python -m pip install -r requirements.txt
+```
+
+- Gere um banco de dados
+```powershell
+cd db
+python -m pip install prisma
+python -m prisma generate
+cd ../
 ```
 
 - Execute o servidor
