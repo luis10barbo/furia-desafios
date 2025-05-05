@@ -3,8 +3,10 @@
 Pequeno prototipo contendo ambas challenges do processo seletivo da FURIA
 
 [Acesse Chat Aqui](https://furia.luisbrb.com.br/chat)
+![Chat Image](https://github.com/luis10barbo/furia-desafios/blob/main/images/chat.png?raw=true)
 
 [Acesse Know Your Fan Aqui](https://furia.luisbrb.com.br/kyf)
+![KYF Image](https://github.com/luis10barbo/furia-desafios/blob/main/images/kyf.png?raw=true)
 
 ## Requisitos
 
