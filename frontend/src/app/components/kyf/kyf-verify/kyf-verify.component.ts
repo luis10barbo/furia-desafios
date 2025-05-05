@@ -5,6 +5,7 @@ import { UserModel } from '@/app/models/userModel';
 import { KyfService } from '@/app/services/kyf/kyf.service';
 import { NotificationService } from '@/app/services/notification/notification.service';
 import { HeaderComponent } from '../../header/header.component';
+import { catchError, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-kyf-verify',
@@ -117,7 +118,11 @@ export class KyfVerifyComponent {
       return;
     }
     this.verifyingDocument = true;
-    this.kyfService.submitDocument(this.frontDocumentFile, this.backDocumentFile).subscribe((val) => {
+    this.kyfService.submitDocument(this.frontDocumentFile, this.backDocumentFile).pipe(catchError(err => {
+      this.notificationService.show({description: err.error, title: "Erro ao validar documento"});
+      this.verifyingDocument = false;
+      return throwError(() => err);
+    })).subscribe((val) => {
       this.verifyingDocument = false;
       window.location.href = "/kyf/profile"
     });

@@ -60,10 +60,6 @@ export class KyfService {
     const form = new FormData();
     form.set("frontDocument", front);
     form.set("backDocument", back);
-    return this.httpClient.post(`${environment.BACKEND}/kyf/document`, form, {withCredentials: true}).pipe(catchError(err => {
-      this.notificationService.show({description: err.error, title: "Erro ao validar documento"});
-
-      return throwError(() => err);
-    }));
+    return this.httpClient.post(`${environment.BACKEND}/kyf/document`, form, {withCredentials: true});
   }
 }
