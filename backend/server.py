@@ -1,3 +1,4 @@
+import os
 import dotenv
 from quart import Quart
 from quart_cors import cors # type:ignore 
@@ -21,8 +22,14 @@ async def startup():
 
 def main() -> None:
     dotenv.dotenv_values(".env")
+    port = 8000
+    try:
+        port = int(os.environ["SERVER_PORT"])
+    except Exception:
+        pass
+
     print("starting server!")
-    app.run(host="0.0.0.0", port=8000)
+    app.run(host="0.0.0.0", port=port)
     
 
 if __name__ == "__main__":
