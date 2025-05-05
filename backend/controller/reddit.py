@@ -98,32 +98,35 @@ def check_if_is_furia_related(like: Child):
     
     return json.loads(response.choices[0].message.content)
 
-    # if title and "furia" in title.lower():
-    #     return True
-    
-    # if post and "furia" in post:
-    #     return True
-
-    # return False
-
 async def add_reddit_furia_related_content():
     user = await get_user()
     if not user:
         return "User not found"
+    
+    reddit_link = await get_user_reddit_link(user)
+    if isinstance(reddit_link, RedditControllerError):
+        return reddit_link
 
     reddit_likes_response = await reddit_get_likes(None, user)
-
 
     if isinstance(reddit_likes_response, RedditControllerError):
         return reddit_likes_response
 
     likes = reddit_likes_response["data"]["children"]
-    for like in likes:
-        is_furia_related = check_if_is_furia_related(like)
-        if not is_furia_related:
-            continue
+    await db.socialmedialink.update({"analyzingPosts": True}, {"id": reddit_link.id})
+    
+    try:
+        for like in likes:
+            is_furia_related = check_if_is_furia_related(like)
+            if not is_furia_related:
+                continue
 
-        data = like["data"]
-        post_url = "https://reddit.com" + data["permalink"] # type: ignore
-        await db.socialmediapost.upsert({"postUrl": "REDDIT"+post_url}, {"create": {"postDescription": data.get("selftext"), "postTitle": data.get("title"), "postUrl": post_url, "socialMedia": "Reddit", "user": {"connect": {"id": user.id}}, "interactionType": "Upvote"}, "update": {}})
+            data = like["data"]
+            post_url = "https://reddit.com" + data["permalink"] # type: ignore
+            unique_id = user.id + "-" + post_url
+            await db.socialmediapost.upsert({"id": unique_id}, {"create": {"id": unique_id, "postDescription": data.get("selftext"), "postTitle": data.get("title"), "postUrl": post_url, "socialMedia": "Reddit", "user": {"connect": {"id": user.id}}, "interactionType": "Upvote"}, "update": {}})
+    except Exception as e:
+        print("Error" + e.__str__())
+
+    await db.socialmedialink.update({"analyzingPosts": False}, {"id": reddit_link.id})
     

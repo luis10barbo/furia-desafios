@@ -71,8 +71,8 @@ model Session {
 }
 
 model SocialMediaPost {
-  id String @id @default(cuid())
-  postUrl String @unique
+  id String @id
+  postUrl String 
   postTitle String?
   postDescription String?
   socialMedia String
@@ -85,6 +85,7 @@ model SocialMediaPost {
 model SocialMediaLink {
   id String @id @default(cuid())
   provider String
+  analyzingPosts Boolean @default(false)
 
   accessToken String
   refreshToken String?
