@@ -21,11 +21,13 @@ def _get_session_id():
     return session_id
 
 def set_session_id(response: ResponseTypes):
-    response.set_cookie(AUTH_COOKIE, _get_session_id())
+    new_session_id = _get_session_id()
+    response.set_cookie(AUTH_COOKIE, new_session_id)
+    return new_session_id
 
-async def create_session(user_id: str):
+async def create_session(user_id: str, new_session_id: str | None = None):
     expiration_date = datetime.datetime.today() + datetime.timedelta(days=7)
-    await db.session.create({"cookie": _get_session_id(), "expirationDate": expiration_date, "user": {"connect": {"id": user_id}}})
+    await db.session.create({"cookie": new_session_id if new_session_id else _get_session_id(), "expirationDate": expiration_date, "user": {"connect": {"id": user_id}}})
 
 async def get_session(user_id: str | None = None, include_user: bool | None = None):
     session = await db.session.find_unique({"cookie": _get_session_id()}, {"user": {"include": {"events": True, "purchases": True, "socialMediaLink": True, "socialMediaPost": True}}})

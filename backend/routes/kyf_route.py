@@ -49,8 +49,8 @@ async def login():
 
     response = await make_response(user.model_dump_json())
 
-    set_session_id(response)
-    await create_session(user.id)
+    new_session_id = set_session_id(response)
+    await create_session(user.id, new_session_id)
     return response
 
 class RegisterBody(TypedDict):
@@ -114,9 +114,9 @@ async def register():
     })
     
     response = await make_response(user.model_dump_json())
-    set_session_id(response)
+    new_session_id = set_session_id(response)
 
-    await create_session(user.id)
+    await create_session(user.id, new_session_id)
 
     user.password = ""
 
